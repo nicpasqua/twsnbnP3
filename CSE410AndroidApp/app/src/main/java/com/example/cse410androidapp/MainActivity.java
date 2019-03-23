@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        lv=(ListView) findViewById(R.id.listView);
+
+
 
 
     }

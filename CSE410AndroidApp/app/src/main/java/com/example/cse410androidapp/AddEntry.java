@@ -18,13 +18,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ArrayAdapter;
 
 public class AddEntry extends AppCompatActivity {
 
     /*the code to upload a gallery image is referenced here from
     http://viralpatel.net/blogs/pick-image-from-galary-android-app/*/
     private static int RESULT_LOAD_IMAGE = 1;
-    ArrayList<Entry> Entries = new ArrayList<Entry>();
+    private static ArrayList<Entry> Entries = new ArrayList<Entry>();
+    ArrayAdapter<Entry> adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,8 @@ public class AddEntry extends AppCompatActivity {
         setContentView(R.layout.activity_add_entry);
 
         EditText Note = (EditText) findViewById(R.id.editNote);
+
+        adapter = new ArrayAdapter<Entry>(this, android.R.layout.simple_list_item_1,Entries);
 
         Button UploadPicture = (Button) findViewById(R.id.buttonUpload);
         UploadPicture.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +71,7 @@ public class AddEntry extends AppCompatActivity {
                 e.setNote(note);
 
                 Entries.add(e);
-                ListView lister = (ListView) findViewById(R.id.listViewer);
+                adapter.notifyDataSetChanged();
                 finish();
 
             }
@@ -81,8 +86,10 @@ public class AddEntry extends AppCompatActivity {
         });
 
     }
-
-
+    protected void onPostExecute(){
+        ListView lister = (ListView) findViewById(R.id.listViewer);
+        lister.setAdapter(adapter);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
