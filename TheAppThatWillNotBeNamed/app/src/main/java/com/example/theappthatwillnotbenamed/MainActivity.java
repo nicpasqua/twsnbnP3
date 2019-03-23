@@ -3,11 +3,11 @@ package com.example.theappthatwillnotbenamed;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-Cursor todoCursor;
-ListView noteList;
-NoteAdapter adapter;
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AppCompatActivity {
+    Cursor todoCursor;
+    ListView noteList;
+    NoteAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

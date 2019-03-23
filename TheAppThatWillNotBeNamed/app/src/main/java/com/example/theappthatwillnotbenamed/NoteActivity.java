@@ -2,16 +2,16 @@ package com.example.theappthatwillnotbenamed;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-String imagePath = "";
-Button saveNote;
-TextView noteTitle;
-ImageView noteImage;
-SQLiteDatabase db;
-boolean isUpdate = false;
-int noteId;
+
 
 public class NoteActivity extends AppCompatActivity {
-
+    String imagePath = "";
+    Button saveNote;
+    TextView noteTitle;
+    ImageView noteImage;
+    SQLiteDatabase db;
+    boolean isUpdate = false;
+    int noteId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
