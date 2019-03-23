@@ -1,7 +1,22 @@
 package com.example.theappthatwillnotbenamed;
 
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.view.View;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import java.io.File;
+import android.content.Intent;
+
+import pl.aprilapps.easyphotopicker.DefaultCallback;
+import pl.aprilapps.easyphotopicker.EasyImage;
+
+
 
 
 public class NoteActivity extends AppCompatActivity {
@@ -12,6 +27,7 @@ public class NoteActivity extends AppCompatActivity {
     SQLiteDatabase db;
     boolean isUpdate = false;
     int noteId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
