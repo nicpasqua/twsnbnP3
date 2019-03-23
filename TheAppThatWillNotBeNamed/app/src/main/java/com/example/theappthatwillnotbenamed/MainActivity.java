@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,15 +19,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     Cursor todoCursor;
     ListView noteList;
     NoteAdapter adapter;
-
+    SwipeRefreshLayout swipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        swipe.setOnRefreshListener(this);
         noteList = (ListView) findViewById(R.id.note_list);
         noteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     0);
         }
-        if(moveToFirst()) setContentView(R.layout.activity_main);
+        if(todoCursor.moveToFirst()) setContentView(R.layout.activity_main);
 
         else setContentView(R.layout.welcome);
     }
@@ -104,5 +107,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadNotesFromDatabase();
+    }
+
+    @Override
+    public void onRefresh() {
+        loadNotesFromDatabase();
     }
 }
