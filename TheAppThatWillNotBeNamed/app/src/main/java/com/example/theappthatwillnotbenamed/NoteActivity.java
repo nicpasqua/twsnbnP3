@@ -3,6 +3,8 @@ package com.example.theappthatwillnotbenamed;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,7 +14,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import java.io.File;
 import android.content.Intent;
-
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 
@@ -27,6 +28,7 @@ public class NoteActivity extends AppCompatActivity {
     SQLiteDatabase db;
     boolean isUpdate = false;
     int noteId;
+    Spinner catagories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,8 @@ public class NoteActivity extends AppCompatActivity {
         }
         saveNote = (Button) findViewById(R.id.create_note);
         noteTitle = (TextView) findViewById(R.id.note_title);
-        noteImage = (ImageView) findViewById(R.id.note_image);
+        noteImage = (ImageView) findViewById(R.id.note_image);catagories = findViewById(R.id.cat);
+        String[] cats = new String[]{"Cat 1", "Cat 2"};
         saveNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +66,8 @@ public class NoteActivity extends AppCompatActivity {
                 EasyImage.openChooserWithGallery(NoteActivity.this, "Upload an Image", 0);
             }
         });
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, cats);
+        catagories.setAdapter(adapter);
     }
     private void updateNote(int noteId, String imagePath, String title, String description, String category) {
         // Create a new instance of the NoteTakingDatabase
@@ -99,7 +104,7 @@ public class NoteActivity extends AppCompatActivity {
         // Get the writable database
         SQLiteDatabase db = handler.getWritableDatabase();
         // Store the note in the database
-        handler.storeNote(db, path, title, description, category);
+        if(!title.equals("")||!description.equals("")||!path.equals("")) handler.storeNote(db, path, title, description, category);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
